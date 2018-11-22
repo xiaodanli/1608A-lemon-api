@@ -11,11 +11,10 @@ function addUser(req,res,next){
 
     var uid = params.uid;
 
-    if(!nickName){
-        res.json({code:2,msg:"用户名为空"})
-        return 
-    }else if(!uid){
+    if(!uid){
         userIsHas();
+    }else{
+        res.json({code:3,msg:"用户已存在"})
     }
 
     //检查昵称是否存在
@@ -36,6 +35,7 @@ function addUser(req,res,next){
     //添加
     function add(){
         uid = uuid.v1();
+        console.log("=====");
         query(sql.ADD_USER,[uid,nickName],function(error,results){
             if(error){
                 res.json({code:0,msg:"服务有错误"})

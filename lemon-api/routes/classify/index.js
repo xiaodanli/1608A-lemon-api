@@ -25,7 +25,6 @@ function addClassify(req,res,next){
             if(error){
                 res.json({code:0,msg:"服务器错误"})
             }else{
-                console.log(results)
                 if(results.length > 0){
                     res.json({code:3,msg:"此分类已存在"})
                 }else{
@@ -49,9 +48,32 @@ function addClassify(req,res,next){
 
 }
 
+//获取分类图标
+function getCIcon(req,res,next){
+    query(sql.SELECT_ICONS,function(error,results){
+        if(error){
+            res.json({code:0,msg:"服务器错误"})
+        }else{
+            res.json({code:1,results})
+        }
+    })
+}
 
 
+//获取分类
+function getClassify(req,res,next){
+    var uid = req.query.uid;
+    query(sql.GET_CLASSIFY,[uid],function(error,results){
+        if(error){
+            res.json({code:0,msg:"服务器错误"})
+        }else{
+            res.json({code:1,results})
+        }
+    })
+}
 
 module.exports = {
-    addClassify:addClassify
+    addClassify:addClassify,
+    getCIcon:getCIcon,
+    getClassify:getClassify
 }
